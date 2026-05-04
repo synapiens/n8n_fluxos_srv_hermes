@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-05-04T14:39:38.647Z",
+  "updatedAt": "2026-05-04T15:06:45.756Z",
   "createdAt": "2026-05-04T13:51:05.515Z",
   "id": "tZLLw6UlcW7e7bVt",
   "name": "Bkp N8N - Fluxos",
@@ -258,11 +258,24 @@
       "type": "n8n-nodes-base.aggregate",
       "typeVersion": 1,
       "position": [
-        224,
-        640
+        336,
+        1296
       ],
-      "id": "2bc59205-93ff-4dce-8f11-49e9f730af01",
+      "id": "369967bb-a134-4e99-944f-02953e499d6e",
       "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        544,
+        1296
+      ],
+      "id": "c8941b4c-6c30-4b8e-b3e3-f8ce56a46e0c",
+      "name": "Set teste"
     }
   ],
   "connections": {
@@ -371,6 +384,17 @@
           }
         ]
       ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Set teste",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
@@ -382,9 +406,9 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "89f6a0fb-9355-4fb4-935b-7f5d108c2d60",
+  "versionId": "f6f3b330-14e5-4a05-a100-40c6bcdfd2f0",
   "activeVersionId": null,
-  "versionCounter": 69,
+  "versionCounter": 75,
   "triggerCount": 0,
   "shared": [
     {
