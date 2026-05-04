@@ -1,0 +1,397 @@
+{
+  "updatedAt": "2026-05-04T15:08:32.236Z",
+  "createdAt": "2026-05-04T13:51:05.515Z",
+  "id": "tZLLw6UlcW7e7bVt",
+  "name": "Bkp N8N - Fluxos",
+  "description": null,
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -416,
+        784
+      ],
+      "id": "298c4b1d-aafe-41b7-bc43-d0c2c560e557",
+      "name": "When clicking 'Execute workflow'"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cfg-1",
+              "name": "githubOwner",
+              "value": "synapiens",
+              "type": "string"
+            },
+            {
+              "id": "cfg-2",
+              "name": "githubRepo",
+              "value": "n8n_fluxos_srv_hermes",
+              "type": "string"
+            },
+            {
+              "id": "cfg-3",
+              "name": "githubBranch",
+              "value": "main",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -192,
+        784
+      ],
+      "id": "471875dc-1453-4974-adad-2794acad3eaa",
+      "name": "Configurações"
+    },
+    {
+      "parameters": {
+        "filters": {},
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-base.n8n",
+      "typeVersion": 1,
+      "position": [
+        32,
+        784
+      ],
+      "id": "9c3d4b80-ff47-4cd5-901a-9629b18f6d5a",
+      "name": "Lista Fluxos",
+      "credentials": {
+        "n8nApi": {
+          "id": "ScAAKsoE9tE3z9Z8",
+          "name": "N8N Hermes"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        272,
+        784
+      ],
+      "id": "d3380b4f-0a76-47d1-9ae0-2e0dad89370d",
+      "name": "Loop Fluxos"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "workflowId": "={{ $json.id }}",
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-base.n8n",
+      "typeVersion": 1,
+      "position": [
+        176,
+        1040
+      ],
+      "id": "62b3fc54-f297-451b-a16e-5265c5ee8b3f",
+      "name": "Get Workflow",
+      "credentials": {
+        "n8nApi": {
+          "id": "ScAAKsoE9tE3z9Z8",
+          "name": "N8N Hermes"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const workflow = $json;\nconst content = JSON.stringify(workflow, null, 2);\nconst base64Content = Buffer.from(content).toString('base64');\n\n// Determina a pasta com base na estrutura do N8N\n// Suporta: folders nativas (v1.x+) e tags (versões anteriores)\nlet folderPath = '_sem_pasta';\n\nif (workflow.parentFolder && workflow.parentFolder.name) {\n  folderPath = workflow.parentFolder.name;\n} else if (workflow.folder && workflow.folder.name) {\n  folderPath = workflow.folder.name;\n} else if (workflow.tags && workflow.tags.length > 0) {\n  folderPath = workflow.tags[0].name;\n}\n\n// Sanitiza para uso em caminhos de arquivo\nconst sanitize = (str) => {\n  return String(str)\n    .normalize('NFD')\n    .replace(/[\\u0300-\\u036f]/g, '') // remove acentos\n    .replace(/[^a-zA-Z0-9\\-_\\s]/g, '')\n    .trim()\n    .replace(/\\s+/g, '_');\n};\n\nconst sanitizedFolder = sanitize(folderPath);\nconst sanitizedName = sanitize(workflow.name);\nconst filePath = `workflows/${sanitizedFolder}/${sanitizedName}.json`;\n\nreturn [{\n  json: {\n    workflowId: workflow.id,\n    workflowName: workflow.name,\n    filePath,\n    base64Content,\n    commitMessage: `chore: backup \"${workflow.name}\"`\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        400,
+        1040
+      ],
+      "id": "f6a946a2-7bb5-449c-8eb3-67d54beb5eb8",
+      "name": "Prepara Dados"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.github.com/repos/{{ $('Configurações').first().json.githubOwner }}/{{ $('Configurações').first().json.githubRepo }}/contents/{{ $json.filePath }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/vnd.github+json"
+            },
+            {
+              "name": "X-GitHub-Api-Version",
+              "value": "2022-11-28"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        624,
+        1040
+      ],
+      "id": "f852241e-3ae3-479b-82a8-6f89bdc352ca",
+      "name": "Busca SHA GitHub",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "RJY77ZeSs8czzz8z",
+          "name": "Github"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const preparaData = $('Prepara Dados').item.json;\nconst shaResponse = $json;\nconst config = $('Configurações').first().json;\n\n// Body pode vir como string — faz parse seguro\nlet sha = null;\nif (shaResponse.statusCode === 200) {\n  try {\n    const body = typeof shaResponse.body === 'string'\n      ? JSON.parse(shaResponse.body)\n      : shaResponse.body;\n    sha = body?.sha || null;\n  } catch (e) {\n    sha = null;\n  }\n}\n\nconst output = {\n  filePath: preparaData.filePath,\n  workflowName: preparaData.workflowName,\n  githubOwner: config.githubOwner,\n  githubRepo: config.githubRepo,\n  message: preparaData.commitMessage,\n  content: preparaData.base64Content,\n  branch: config.githubBranch\n};\n\nif (sha) {\n  output.sha = sha;\n}\n\nreturn [{ json: output }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        560,
+        832
+      ],
+      "id": "b4582ca8-05d9-4842-ab6c-1648223b5b85",
+      "name": "Monta Body GitHub"
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://api.github.com/repos/{{ $json.githubOwner }}/{{ $json.githubRepo }}/contents/{{ $json.filePath }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/vnd.github+json"
+            },
+            {
+              "name": "X-GitHub-Api-Version",
+              "value": "2022-11-28"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "message",
+              "value": "={{ $json.message }}"
+            },
+            {
+              "name": "content",
+              "value": "={{ $json.content }}"
+            },
+            {
+              "name": "branch",
+              "value": "={{ $json.branch }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        768,
+        832
+      ],
+      "id": "7293a7e7-0c6f-4d61-81fd-2ce77c41a0d1",
+      "name": "Salva no GitHub",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "RJY77ZeSs8czzz8z",
+          "name": "Github"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "content": "## ⚙️ Setup antes de executar\n\n**1. Node `Configurações`**\n- `githubOwner` → seu usuário ou org do GitHub\n- `githubRepo` → nome do repo de backup\n- `githubBranch` → branch alvo (ex: `main`)\n\n**2. Credencial `GitHub API`**\nCrie uma credencial do tipo **HTTP Header Auth**:\n- Header Name: `Authorization`\n- Header Value: `Bearer ghp_SEU_TOKEN`\n\nGere em: GitHub → Settings → Developer settings → Personal access tokens (Fine-grained)\nPermissão necessária: **Contents** → Read & Write\n\n**3. Estrutura gerada no repo:**\n```\nworkflows/\n  NomeDaPasta/\n    NomeDoFluxo.json\n  _sem_pasta/\n    FluxoSemPasta.json\n```\nPastas vêm das **Folders** do N8N (v1+) ou da primeira **Tag** do fluxo.",
+        "height": 540,
+        "width": 460,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -464,
+        960
+      ],
+      "id": "9f05d163-44ec-4316-86c8-674d1363ff07",
+      "name": "Instruções"
+    }
+  ],
+  "connections": {
+    "When clicking 'Execute workflow'": {
+      "main": [
+        [
+          {
+            "node": "Configurações",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Configurações": {
+      "main": [
+        [
+          {
+            "node": "Lista Fluxos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lista Fluxos": {
+      "main": [
+        [
+          {
+            "node": "Loop Fluxos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Fluxos": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Get Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Workflow": {
+      "main": [
+        [
+          {
+            "node": "Prepara Dados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepara Dados": {
+      "main": [
+        [
+          {
+            "node": "Busca SHA GitHub",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Busca SHA GitHub": {
+      "main": [
+        [
+          {
+            "node": "Monta Body GitHub",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Monta Body GitHub": {
+      "main": [
+        [
+          {
+            "node": "Salva no GitHub",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Salva no GitHub": {
+      "main": [
+        [
+          {
+            "node": "Loop Fluxos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "433f834d-3a68-4bfc-a5b8-de18852a511b",
+  "activeVersionId": null,
+  "versionCounter": 76,
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2026-05-04T13:51:05.515Z",
+      "createdAt": "2026-05-04T13:51:05.515Z",
+      "role": "workflow:owner",
+      "workflowId": "tZLLw6UlcW7e7bVt",
+      "projectId": "YigPAYsjJFUWZSIE",
+      "project": {
+        "updatedAt": "2026-04-30T14:12:08.367Z",
+        "createdAt": "2026-04-30T14:10:17.113Z",
+        "id": "YigPAYsjJFUWZSIE",
+        "name": "Hermes  Nexus <hermes@synapiens.com.br>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "creatorId": "068cb0bf-00d5-40b6-9668-5199f047d963"
+      }
+    }
+  ],
+  "tags": [
+    {
+      "updatedAt": "2026-05-04T14:33:12.166Z",
+      "createdAt": "2026-05-04T14:33:12.166Z",
+      "id": "4CHBcpdYx5OQ3ZJZ",
+      "name": "Testes Infra"
+    }
+  ],
+  "activeVersion": null
+}
