@@ -1,0 +1,226 @@
+{
+  "updatedAt": "2026-05-04T14:33:31.747Z",
+  "createdAt": "2026-05-01T02:46:31.321Z",
+  "id": "4ASRpIO8aie7DCkp",
+  "name": "Hermes - Agente RAG (DeepSeek + Qdrant + Cohere)",
+  "description": null,
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "436b013f-b861-451b-9cde-0ca766d0155d",
+      "name": "Chat do Hermes",
+      "webhookId": "hermes-rag-chat-001"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.chatInput }}",
+        "options": {
+          "systemMessage": "Você é o Hermes, um agente de atendimento inteligente, atencioso e altamente profissional.\n\nSeu objetivo principal é:\n- Atender com excelência usando a base de conhecimento disponível\n- Tirar dúvidas de forma clara e precisa\n- Aumentar as vendas de forma consultiva e natural\n- Fidelizar clientes\n\nInstruções:\n1. SEMPRE consulte a ferramenta de busca na base de conhecimento antes de responder\n2. Use as informações encontradas para embasar sua resposta\n3. Se não encontrar informação relevante, seja honesto: 'Não tenho essa informação na minha base, mas posso ajudar com...'\n4. Respostas curtas e diretas (3-4 linhas no início)\n5. Nunca invente preços, horários ou informações\n6. Responda sempre em português brasileiro\n7. Seja caloroso, use linguagem natural (você, a gente, perfeito, etc.)\n8. Termine sempre com uma pergunta ou próximo passo"
+        }
+      },
+      "id": "e42e5163-50f2-4878-9b46-7a4c359ffff6",
+      "name": "Agente Hermes",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        272,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "deepseek-v4-flash",
+          "mode": "list",
+          "cachedResultName": "deepseek-v4-flash"
+        },
+        "options": {
+          "maxTokens": 1000,
+          "temperature": 0.7
+        }
+      },
+      "id": "fdcc6a14-90f3-444d-9854-27bf16988533",
+      "name": "DeepSeek Chat",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        64,
+        240
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "jmizMWFqckuVhfQ7",
+          "name": "Hermes DeepSeek API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolName": "busca_conhecimento",
+        "toolDescription": "Busca informações na base de conhecimento do Hermes. Use SEMPRE que o cliente fizer uma pergunta sobre produtos, serviços, preços, procedimentos ou qualquer informação do negócio.",
+        "qdrantCollection": {
+          "__rl": true,
+          "value": "hermes_knowledge",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "id": "20563190-987e-4c52-aba0-6cf967ce9f47",
+      "name": "Busca na Base de Conhecimento",
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "typeVersion": 1,
+      "position": [
+        384,
+        240
+      ],
+      "credentials": {
+        "qdrantApi": {
+          "id": "UiUx7Fxk6FImsJSQ",
+          "name": "Hermes QDrant"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "fc235cdb-cb37-4a3c-aba0-cac21909d0a3",
+      "name": "Embeddings Cohere",
+      "type": "@n8n/n8n-nodes-langchain.embeddingsCohere",
+      "typeVersion": 1,
+      "position": [
+        368,
+        400
+      ],
+      "credentials": {
+        "cohereApi": {
+          "id": "s8T69uLdBLyhkP9X",
+          "name": "Hermes Cohere"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionKey": "sessionId",
+        "contextWindowLength": 10
+      },
+      "id": "f0789709-8440-4fe1-aef1-ff53da9af85c",
+      "name": "Memoria da Conversa",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        224,
+        240
+      ]
+    }
+  ],
+  "connections": {
+    "Chat do Hermes": {
+      "main": [
+        [
+          {
+            "node": "Agente Hermes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DeepSeek Chat": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agente Hermes",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Busca na Base de Conhecimento": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agente Hermes",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Cohere": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Busca na Base de Conhecimento",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Memoria da Conversa": {
+      "ai_memory": [
+        [
+          {
+            "node": "Agente Hermes",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "18325bd7-6987-45e3-b5ab-10ecb91d01bb",
+  "activeVersionId": null,
+  "versionCounter": 16,
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2026-05-01T02:46:31.321Z",
+      "createdAt": "2026-05-01T02:46:31.321Z",
+      "role": "workflow:owner",
+      "workflowId": "4ASRpIO8aie7DCkp",
+      "projectId": "YigPAYsjJFUWZSIE",
+      "project": {
+        "updatedAt": "2026-04-30T14:12:08.367Z",
+        "createdAt": "2026-04-30T14:10:17.113Z",
+        "id": "YigPAYsjJFUWZSIE",
+        "name": "Hermes  Nexus <hermes@synapiens.com.br>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "creatorId": "068cb0bf-00d5-40b6-9668-5199f047d963"
+      }
+    }
+  ],
+  "tags": [
+    {
+      "updatedAt": "2026-05-04T14:33:12.166Z",
+      "createdAt": "2026-05-04T14:33:12.166Z",
+      "id": "4CHBcpdYx5OQ3ZJZ",
+      "name": "Testes Infra"
+    }
+  ],
+  "activeVersion": null
+}
