@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-05-04T15:06:45.756Z",
+  "updatedAt": "2026-05-04T15:08:32.236Z",
   "createdAt": "2026-05-04T13:51:05.515Z",
   "id": "tZLLw6UlcW7e7bVt",
   "name": "Bkp N8N - Fluxos",
@@ -249,33 +249,6 @@
       ],
       "id": "9f05d163-44ec-4316-86c8-674d1363ff07",
       "name": "Instruções"
-    },
-    {
-      "parameters": {
-        "aggregate": "aggregateAllItemData",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.aggregate",
-      "typeVersion": 1,
-      "position": [
-        336,
-        1296
-      ],
-      "id": "369967bb-a134-4e99-944f-02953e499d6e",
-      "name": "Aggregate"
-    },
-    {
-      "parameters": {
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        544,
-        1296
-      ],
-      "id": "c8941b4c-6c30-4b8e-b3e3-f8ce56a46e0c",
-      "name": "Set teste"
     }
   ],
   "connections": {
@@ -314,13 +287,7 @@
     },
     "Loop Fluxos": {
       "main": [
-        [
-          {
-            "node": "Aggregate",
-            "type": "main",
-            "index": 0
-          }
-        ],
+        [],
         [
           {
             "node": "Get Workflow",
@@ -384,17 +351,6 @@
           }
         ]
       ]
-    },
-    "Aggregate": {
-      "main": [
-        [
-          {
-            "node": "Set teste",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
     }
   },
   "settings": {
@@ -406,9 +362,9 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "f6f3b330-14e5-4a05-a100-40c6bcdfd2f0",
+  "versionId": "433f834d-3a68-4bfc-a5b8-de18852a511b",
   "activeVersionId": null,
-  "versionCounter": 75,
+  "versionCounter": 76,
   "triggerCount": 0,
   "shared": [
     {
