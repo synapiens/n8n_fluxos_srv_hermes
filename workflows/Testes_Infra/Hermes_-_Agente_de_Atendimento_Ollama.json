@@ -1,0 +1,186 @@
+{
+  "updatedAt": "2026-05-04T15:22:30.443Z",
+  "createdAt": "2026-05-01T01:35:15.786Z",
+  "id": "E7YxyhlpJ3gjPBE3",
+  "name": "Hermes - Agente de Atendimento (Ollama)",
+  "description": null,
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "assign-session",
+              "name": "sessionId",
+              "value": "={{ $json.sessionId ?? 'default' }}",
+              "type": "string"
+            },
+            {
+              "id": "assign-msg",
+              "name": "userMessage",
+              "value": "={{ $json.chatInput }}",
+              "type": "string"
+            },
+            {
+              "id": "assign-system",
+              "name": "systemPrompt",
+              "value": "Você é o **Hermes**, um agente de atendimento inteligente, atencioso e altamente profissional.\n\nSeu objetivo principal é ajudar o negócio do cliente a:\n- Atender com excelência\n- Tirar dúvidas de forma clara e precisa\n- Aumentar as vendas de forma consultiva e natural\n- Fidelizar clientes lembrando de interações anteriores\n\n### Tom de voz e personalidade:\n- Educado, caloroso e profissional\n- Linguagem clara, objetiva e em português brasileiro natural (use \"você\", \"a gente\", \"legal\", \"perfeito\", etc.)\n- Seja empático e paciente\n- Nunca seja robótico ou frio\n- Use emojis com moderação e apenas quando fizer sentido\n\n### Regras obrigatórias:\n1. Respostas curtas e diretas (máximo 3-4 linhas no início)\n2. Use quebras de linha e bullets quando ajudar na clareza\n3. Sempre termine oferecendo próximo passo ou fazendo uma pergunta quando apropriado\n4. Nunca invente preços, horários ou informações\n5. Nunca dê diagnóstico médico\n\n### Identidade:\n- Nome: Hermes\n- Responda sempre em português brasileiro",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "23d03c28-060a-40b8-ac13-dc0a233a6764",
+      "name": "Setup da Conversa",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1952,
+        496
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://ollama:11434/api/chat",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"qwen2.5:3b\",\n  \"stream\": false,\n  \"options\": {\n    \"temperature\": 0.7,\n    \"num_predict\": 512\n  },\n  \"messages\": [\n    {\n      \"role\": \"system\",\n      \"content\": {{ JSON.stringify($json.systemPrompt) }}\n    },\n    {\n      \"role\": \"user\",\n      \"content\": {{ JSON.stringify($json.userMessage) }}\n    }\n  ]\n}",
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "id": "9a79ca15-82a6-44c4-8dd5-036db90cad95",
+      "name": "Hermes via Ollama",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2176,
+        496
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "assign-output",
+              "name": "output",
+              "value": "={{ $json.message?.content?.trim() ?? 'Desculpe, não consegui processar sua mensagem no momento. Pode tentar novamente?' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "2f56aa55-3bd8-4b0b-9ae4-e4444b2edbc3",
+      "name": "Resposta do Hermes",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2400,
+        496
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        1728,
+        496
+      ],
+      "id": "41ee758d-bd3b-4136-9a1a-2ceb7a5790fa",
+      "name": "Chat do Hermes",
+      "webhookId": "fd5aecdd-f815-4531-9307-e477547e0cb4"
+    }
+  ],
+  "connections": {
+    "Setup da Conversa": {
+      "main": [
+        [
+          {
+            "node": "Hermes via Ollama",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Hermes via Ollama": {
+      "main": [
+        [
+          {
+            "node": "Resposta do Hermes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chat do Hermes": {
+      "main": [
+        [
+          {
+            "node": "Setup da Conversa",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {},
+  "versionId": "b5b35c94-5ae0-4cbf-ad15-a656c1799c64",
+  "activeVersionId": null,
+  "versionCounter": 71,
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2026-05-01T01:35:15.786Z",
+      "createdAt": "2026-05-01T01:35:15.786Z",
+      "role": "workflow:owner",
+      "workflowId": "E7YxyhlpJ3gjPBE3",
+      "projectId": "YigPAYsjJFUWZSIE",
+      "project": {
+        "updatedAt": "2026-04-30T14:12:08.367Z",
+        "createdAt": "2026-04-30T14:10:17.113Z",
+        "id": "YigPAYsjJFUWZSIE",
+        "name": "Hermes  Nexus <hermes@synapiens.com.br>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "creatorId": "068cb0bf-00d5-40b6-9668-5199f047d963"
+      }
+    }
+  ],
+  "tags": [
+    {
+      "updatedAt": "2026-05-04T14:33:12.166Z",
+      "createdAt": "2026-05-04T14:33:12.166Z",
+      "id": "4CHBcpdYx5OQ3ZJZ",
+      "name": "Testes Infra"
+    }
+  ],
+  "activeVersion": null
+}
