@@ -1,0 +1,310 @@
+{
+  "updatedAt": "2026-05-04T14:35:26.690Z",
+  "createdAt": "2026-04-30T14:37:57.888Z",
+  "id": "NfXLrXFcFBjf3iA5",
+  "name": "Teste Ollama — qwen2.5:1.5b",
+  "description": null,
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "518cb326-189b-4165-b848-edc6c509a3a6",
+      "name": "▶️ Iniciar Teste",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -496,
+        768
+      ]
+    },
+    {
+      "parameters": {
+        "url": "http://ollama.hermes.synapiens.com.br/api/tags",
+        "options": {
+          "timeout": 10000
+        }
+      },
+      "id": "4e3acfa8-8c7d-4f16-8cd4-54b22af2fdd2",
+      "name": "1️⃣ Listar Modelos",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -304,
+        768
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://ollama:11434/api/chat",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"model\": \"qwen2.5:3b\",\n  \"stream\": false,\n  \"messages\": [\n    {\n      \"role\": \"system\",\n      \"content\": \"Você é um assistente útil. Responda sempre em português.\"\n    },\n    {\n      \"role\": \"user\",\n      \"content\": \"Diga apenas: É nóis!!\"\n    }\n  ]\n}",
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "id": "db2d1e2b-1c5c-4a63-920e-6fe84802489d",
+      "name": "2️⃣ Testar Chat",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -80,
+        768
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a1",
+              "name": "modelos_instalados",
+              "value": "={{ $('1️⃣ Listar Modelos').item.json.models.map(m => m.name).join(', ') }}",
+              "type": "string"
+            },
+            {
+              "id": "a2",
+              "name": "chat_modelo",
+              "value": "={{ $json.model }}",
+              "type": "string"
+            },
+            {
+              "id": "a3",
+              "name": "chat_resposta",
+              "value": "={{ $json.message.content }}",
+              "type": "string"
+            },
+            {
+              "id": "a4",
+              "name": "chat_tokens_gerados",
+              "value": "={{ $json.eval_count }}",
+              "type": "number"
+            },
+            {
+              "id": "a5",
+              "name": "chat_duracao_ms",
+              "value": "={{ Math.round($json.total_duration / 1000000) }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "6cdb8985-9f0d-46e2-8279-fa481d5de0bb",
+      "name": "3️⃣ Extrair Dados do Chat",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        144,
+        768
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://ollama:11434/api/generate",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"model\": \"qwen2.5:1.5b\",\n  \"stream\": false,\n  \"prompt\": \"Qual é a capital do Canadá? Responda em uma frase curta.\"\n}",
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "id": "5d1ce8cf-0665-4191-9f0c-8aff850189d3",
+      "name": "4️⃣ Testar Generate",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        368,
+        768
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b1",
+              "name": "modelos_instalados",
+              "value": "={{ $('3️⃣ Extrair Dados do Chat').item.json.modelos_instalados }}",
+              "type": "string"
+            },
+            {
+              "id": "b2",
+              "name": "chat_modelo",
+              "value": "={{ $('3️⃣ Extrair Dados do Chat').item.json.chat_modelo }}",
+              "type": "string"
+            },
+            {
+              "id": "b3",
+              "name": "chat_resposta",
+              "value": "={{ $('3️⃣ Extrair Dados do Chat').item.json.chat_resposta }}",
+              "type": "string"
+            },
+            {
+              "id": "b4",
+              "name": "chat_tokens_gerados",
+              "value": "={{ $('3️⃣ Extrair Dados do Chat').item.json.chat_tokens_gerados }}",
+              "type": "number"
+            },
+            {
+              "id": "b5",
+              "name": "chat_duracao_ms",
+              "value": "={{ $('3️⃣ Extrair Dados do Chat').item.json.chat_duracao_ms }}",
+              "type": "number"
+            },
+            {
+              "id": "b6",
+              "name": "generate_resposta",
+              "value": "={{ $json.response }}",
+              "type": "string"
+            },
+            {
+              "id": "b7",
+              "name": "generate_tokens_gerados",
+              "value": "={{ $json.eval_count }}",
+              "type": "number"
+            },
+            {
+              "id": "b8",
+              "name": "generate_duracao_ms",
+              "value": "={{ Math.round($json.total_duration / 1000000) }}",
+              "type": "number"
+            },
+            {
+              "id": "b9",
+              "name": "status",
+              "value": "✅ Ollama funcionando corretamente",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b35f057a-6966-4d41-ab0a-80d0e69f6d9a",
+      "name": "5️⃣ Montar Relatório Final",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        592,
+        768
+      ]
+    }
+  ],
+  "connections": {
+    "▶️ Iniciar Teste": {
+      "main": [
+        [
+          {
+            "node": "1️⃣ Listar Modelos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "1️⃣ Listar Modelos": {
+      "main": [
+        [
+          {
+            "node": "2️⃣ Testar Chat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "2️⃣ Testar Chat": {
+      "main": [
+        [
+          {
+            "node": "3️⃣ Extrair Dados do Chat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "3️⃣ Extrair Dados do Chat": {
+      "main": [
+        [
+          {
+            "node": "4️⃣ Testar Generate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4️⃣ Testar Generate": {
+      "main": [
+        [
+          {
+            "node": "5️⃣ Montar Relatório Final",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {},
+  "versionId": "24352a5b-4bc4-4543-b3a7-d6d84322625f",
+  "activeVersionId": null,
+  "versionCounter": 22,
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2026-04-30T14:37:57.888Z",
+      "createdAt": "2026-04-30T14:37:57.888Z",
+      "role": "workflow:owner",
+      "workflowId": "NfXLrXFcFBjf3iA5",
+      "projectId": "YigPAYsjJFUWZSIE",
+      "project": {
+        "updatedAt": "2026-04-30T14:12:08.367Z",
+        "createdAt": "2026-04-30T14:10:17.113Z",
+        "id": "YigPAYsjJFUWZSIE",
+        "name": "Hermes  Nexus <hermes@synapiens.com.br>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "creatorId": "068cb0bf-00d5-40b6-9668-5199f047d963"
+      }
+    }
+  ],
+  "tags": [
+    {
+      "updatedAt": "2026-05-04T14:33:12.166Z",
+      "createdAt": "2026-05-04T14:33:12.166Z",
+      "id": "4CHBcpdYx5OQ3ZJZ",
+      "name": "Testes Infra"
+    }
+  ],
+  "activeVersion": null
+}
