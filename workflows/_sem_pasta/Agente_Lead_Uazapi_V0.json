@@ -1,0 +1,1839 @@
+{
+  "updatedAt": "2026-05-06T19:33:23.315Z",
+  "createdAt": "2026-05-06T18:20:57.858Z",
+  "id": "AaFUKehBqa6Ins3A",
+  "name": "Agente Lead Uazapi V0",
+  "description": null,
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "hermes-nexus",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -112,
+        736
+      ],
+      "id": "ec3ff104-8671-4cab-a83a-d28421464304",
+      "name": "Webhook",
+      "webhookId": "0d37d4e6-8a8d-420a-95b6-9ec97d462e7c"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9f5229fa-aef3-498e-9d6a-e4a71d88d234",
+              "name": "tipo_evento",
+              "value": "={{ $('Webhook').item.json.body.EventType }}",
+              "type": "string"
+            },
+            {
+              "id": "76dd82ec-7156-46e1-ae18-12c9d1787fae",
+              "name": "chat_name",
+              "value": "={{ $('Webhook').item.json.body.chat.name }}",
+              "type": "string"
+            },
+            {
+              "id": "6b82bd22-1f0c-4a86-a7da-21404dbab34e",
+              "name": "chat_agente",
+              "value": "={{ $('Webhook').item.json.body.chat.owner }}",
+              "type": "string"
+            },
+            {
+              "id": "78848111-e81c-46de-9036-d371aa4a4b32",
+              "name": "chat_cliente",
+              "value": "={{ $('Webhook').item.json.body.chat.phone }}",
+              "type": "string"
+            },
+            {
+              "id": "767f0377-82c3-40f5-9590-64f0d92885bf",
+              "name": "chat_id",
+              "value": "={{ $('Webhook').item.json.body.chat.wa_chatid }}",
+              "type": "string"
+            },
+            {
+              "id": "2a413026-4b50-4f20-9351-3c52a06be173",
+              "name": "chat_lid",
+              "value": "={{ $('Webhook').item.json.body.chat.wa_chatlid }}",
+              "type": "string"
+            },
+            {
+              "id": "2c18d894-a4f5-4069-88a6-935342bd19d4",
+              "name": "chat_nome_contato",
+              "value": "={{ $('Webhook').item.json.body.chat.wa_contactName }}",
+              "type": "string"
+            },
+            {
+              "id": "2b8d9476-5560-4428-951e-39a841b00b6f",
+              "name": "chat_fast_id",
+              "value": "={{ $('Webhook').item.json.body.chat.wa_fastid }}",
+              "type": "string"
+            },
+            {
+              "id": "5192c764-52b7-498f-be52-20637148edf8",
+              "name": "chat_ultimo_lid_envio",
+              "value": "={{ $('Webhook').item.json.body.chat.wa_lastMessageSender }}",
+              "type": "string"
+            },
+            {
+              "id": "6028c0b6-efaf-4ebe-b401-e53406b13c7f",
+              "name": "chat_ultimo_tipo_msg",
+              "value": "={{ $('Webhook').item.json.body.chat.wa_lastMessageType }}",
+              "type": "string"
+            },
+            {
+              "id": "c7af63a1-6d52-4ad3-9366-2929be8a6226",
+              "name": "chat_timestamp_msg",
+              "value": "={{ $('Webhook').item.json.body.chat.wa_lastMsgTimestamp }}",
+              "type": "number"
+            },
+            {
+              "id": "918a9d5c-bdb8-4beb-b2ab-b09b3355352c",
+              "name": "msg_chatid",
+              "value": "={{ $('Webhook').item.json.body.message.chatid }}",
+              "type": "string"
+            },
+            {
+              "id": "4fe3052a-6ed7-4dd9-aa50-8d040e49e88a",
+              "name": "msg_chatlid",
+              "value": "={{ $('Webhook').item.json.body.message.chatlid }}",
+              "type": "string"
+            },
+            {
+              "id": "efae5ba3-46d4-4cf8-a9a3-7186d2fdb6d0",
+              "name": "msg_conteudo",
+              "value": "={{ $('Webhook').item.json.body.message.content }}",
+              "type": "string"
+            },
+            {
+              "id": "51fc4ceb-626a-4e53-86aa-cd7815547e6d",
+              "name": "msg_minha",
+              "value": "={{ $('Webhook').item.json.body.message.fromMe }}",
+              "type": "boolean"
+            },
+            {
+              "id": "2cf1d628-e1d2-4c9d-b79f-0465b5a124cc",
+              "name": "msg_cliente",
+              "value": "={{ $('Webhook').item.json.body.message.senderName }}",
+              "type": "string"
+            },
+            {
+              "id": "83a81328-6747-459b-b431-48d7ec1de2f5",
+              "name": "msg_so_origem",
+              "value": "={{ $('Webhook').item.json.body.message.source }}",
+              "type": "string"
+            },
+            {
+              "id": "c552efec-0a24-46ab-a2e6-19c1e11ff431",
+              "name": "msg_status",
+              "value": "={{ $('Webhook').item.json.body.message.status }}",
+              "type": "string"
+            },
+            {
+              "id": "3c6cec05-c563-4263-87c2-df8292e2153d",
+              "name": "msg_texto",
+              "value": "={{ $('Webhook').item.json.body.message.text }}",
+              "type": "string"
+            },
+            {
+              "id": "f866961c-d539-4c98-8b48-7c5914fe4e30",
+              "name": "msg_grupo",
+              "value": "={{ $('Webhook').item.json.body.chat.wa_isGroup }}",
+              "type": "boolean"
+            },
+            {
+              "id": "238928b8-8336-45f1-bc5a-c2962eb9f50c",
+              "name": "msg_bloquedo",
+              "value": "={{ $('Webhook').item.json.body.chat.wa_isBlocked }}",
+              "type": "boolean"
+            },
+            {
+              "id": "25b70c99-993b-48d1-b136-bff6f2be9026",
+              "name": "token",
+              "value": "40199d39-514e-4e22-a5d2-f4f0b14bb0ff",
+              "type": "string"
+            },
+            {
+              "id": "470101ad-62cc-4748-a025-c31d51890b1d",
+              "name": "supa_url",
+              "value": "",
+              "type": "string"
+            },
+            {
+              "id": "d9c66838-bb0f-400c-b2f3-c90943a5d4ee",
+              "name": "supa_token",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -96,
+        512
+      ],
+      "id": "7b372d58-f078-4d08-ba7d-3296387351b8",
+      "name": "Normaliza"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "IufdvqLDIHqb6MWk",
+          "mode": "list",
+          "cachedResultName": "Relacao Org Agente",
+          "cachedResultUrl": "/projects/YigPAYsjJFUWZSIE/datatables/IufdvqLDIHqb6MWk"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "agente_id",
+              "keyValue": "={{ $json.chat_agente }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        -80,
+        304
+      ],
+      "id": "89171678-e9e7-49ec-abed-591f67c6ef8f",
+      "name": "Busca Organizacao"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "87cbc8d2-9190-4098-8faa-afe5a7225b71",
+              "leftValue": "={{ $json.msg_minha }}",
+              "rightValue": false,
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        128,
+        304
+      ],
+      "id": "9f329364-7d90-4be6-838f-22026edf9e37",
+      "name": "Msg não minha"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "8ec2327a-61d4-4b21-9996-f82b304076f0",
+              "leftValue": "={{ $('Normaliza').item.json.tipo_evento }}",
+              "rightValue": "messages",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        368,
+        288
+      ],
+      "id": "e3475f0e-aff6-4d73-b10b-7150f2a604bc",
+      "name": "É Mensagem"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "a0eabc0b-ae61-4c6e-bf58-8aa0f41eb5a3",
+              "leftValue": "={{ $('Normaliza').item.json.msg_grupo }}",
+              "rightValue": false,
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        128,
+        544
+      ],
+      "id": "9385ae57-e259-4650-a7b3-faf9dade754e",
+      "name": "Não é Grupo"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        128,
+        768
+      ],
+      "id": "3baee903-132b-4a30-a94c-6840a5fbecde",
+      "name": "É grupo"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://hermes-nexus.uazapi.com/chat/details",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "token",
+              "value": "={{ $('Normaliza').item.json.token }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "number",
+              "value": "={{ $('Normaliza').item.json.chat_cliente }}"
+            },
+            {
+              "name": "preview",
+              "value": "false"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        704,
+        528
+      ],
+      "id": "439e0b8b-2ade-4350-9c22-741d6ced3252",
+      "name": "Busca Contato"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Busca Contato').item.json.image }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        688,
+        768
+      ],
+      "id": "340162a2-4ff4-4ac2-80ce-baaf2ebe141d",
+      "name": "Baixa Imagem Contato"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "aa001001-0000-0000-0000-000000000001",
+              "name": "org_codigo",
+              "value": "={{ $('Busca Organizacao').item.json.organizacao_id }}",
+              "type": "string"
+            },
+            {
+              "id": "aa001002-0000-0000-0000-000000000002",
+              "name": "storage_filename",
+              "value": "={{ $('Normaliza').item.json.chat_cliente }}.jpg",
+              "type": "string"
+            },
+            {
+              "id": "aa001003-0000-0000-0000-000000000003",
+              "name": "storage_path",
+              "value": "={{ $('Busca Organizacao').item.json.organizacao_id + '/' + $('Normaliza').item.json.chat_cliente + '.jpg' }}",
+              "type": "string"
+            },
+            {
+              "id": "aa001004-0000-0000-0000-000000000004",
+              "name": "supabase_url",
+              "value": "={{ $('Busca URL').item.json.valor }}",
+              "type": "string"
+            },
+            {
+              "id": "aa001005-0000-0000-0000-000000000005",
+              "name": "supabase_service_key",
+              "value": "={{ $('Busca Chave').item.json.valor }}",
+              "type": "string"
+            },
+            {
+              "id": "aa001006-0000-0000-0000-000000000006",
+              "name": "imagem_url_publica",
+              "value": "={{ $('Busca URL').item.json.valor + '/storage/v1/object/public/lead/' + $('Busca Organizacao').item.json.organizacao_id + '/' + $('Normaliza').item.json.chat_cliente + '.jpg' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1152,
+        544
+      ],
+      "id": "d49dcd54-7613-4eaf-b792-bce6b8469ed4",
+      "name": "Monta Path Storage"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Monta Path Storage').item.json.supabase_url + '/storage/v1/object/lead/' + $('Monta Path Storage').item.json.storage_path }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ 'Bearer ' + $('Monta Path Storage').item.json.supabase_service_key }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "image/jpeg"
+            },
+            {
+              "name": "x-upsert",
+              "value": "true"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "binaryData",
+        "inputDataFieldName": "data",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        928,
+        768
+      ],
+      "id": "7d79eb51-a446-4b45-9673-3e1c6c66407f",
+      "name": "Upload Imagem Supabase"
+    },
+    {
+      "parameters": {
+        "content": "### Trata Mensagem\n",
+        "height": 448,
+        "width": 512,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        64,
+        240
+      ],
+      "typeVersion": 1,
+      "id": "181fd580-9e06-434a-a157-e5a44c3111ba",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "### Imagem → Supabase Storage\n⚠️ Ajuste antes de usar:\n- supabase_url e supabase_service_key vêm do vault\n- on_conflict=contact: coluna unique da tabela lead\n- Se a PK for diferente, altere o parâmetro on_conflict na URL do Upsert Lead",
+        "height": 200,
+        "width": 580,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        0
+      ],
+      "typeVersion": 1,
+      "id": "e7aec61a-604c-4c7a-80c9-dfcda731c4f3",
+      "name": "Sticky Note Supabase"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Monta Path Storage').item.json.supabase_url }}/rest/v1/leads?on_conflict=id",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $('Monta Path Storage').item.json.supabase_service_key }}"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ 'Bearer ' + $('Monta Path Storage').item.json.supabase_service_key }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Prefer",
+              "value": "resolution=merge-duplicates,return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "organization_id",
+              "value": "={{ $('Busca Organizacao').item.json.organizacao_id }}"
+            },
+            {
+              "name": "name",
+              "value": "={{ $('Normaliza').item.json.chat_nome_contato || $('Normaliza').item.json.msg_cliente }}"
+            },
+            {
+              "name": "contact",
+              "value": "={{ $('Normaliza').item.json.chat_cliente }}"
+            },
+            {
+              "name": "wht_id",
+              "value": "={{ $('Normaliza').item.json.msg_chatid }}"
+            },
+            {
+              "name": "wht_lid",
+              "value": "={{ $('Normaliza').item.json.chat_lid }}"
+            },
+            {
+              "name": "wht_cnt_nome",
+              "value": "={{ $('Normaliza').item.json.msg_cliente }}"
+            },
+            {
+              "name": "avatar_url",
+              "value": "={{ $('Monta Path Storage').item.json.imagem_url_publica }}"
+            },
+            {
+              "name": "id",
+              "value": "={{ $('Busca Lead').item.json.id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1152,
+        768
+      ],
+      "id": "dd749a98-bad5-4f13-ace2-9aaff0332b12",
+      "name": "Upsert Lead"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "d2NFNGIyvL1BjYsp",
+          "mode": "list",
+          "cachedResultName": "vault",
+          "cachedResultUrl": "/projects/YigPAYsjJFUWZSIE/datatables/d2NFNGIyvL1BjYsp"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "projeto",
+              "keyValue": "n8n_hermes_nexus_lead"
+            },
+            {
+              "keyName": "item",
+              "keyValue": "SUPABASE_URL"
+            }
+          ]
+        },
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        704,
+        352
+      ],
+      "id": "4dc72e7d-06cf-4c62-a7ce-61f2be88174d",
+      "name": "Busca URL"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "d2NFNGIyvL1BjYsp",
+          "mode": "list",
+          "cachedResultName": "vault",
+          "cachedResultUrl": "/projects/YigPAYsjJFUWZSIE/datatables/d2NFNGIyvL1BjYsp"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "projeto",
+              "keyValue": "n8n_hermes_nexus_lead"
+            },
+            {
+              "keyName": "item",
+              "keyValue": "SUPABASE_KEY"
+            }
+          ]
+        },
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        928,
+        352
+      ],
+      "id": "2aa6dd22-ead8-45cb-a2ae-44c94aed9948",
+      "name": "Busca Chave"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "leads",
+        "returnAll": true,
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "wht_lid",
+              "condition": "eq",
+              "keyValue": "={{ $('Normaliza').item.json.msg_chatlid }}"
+            },
+            {
+              "keyName": "wht_id",
+              "condition": "eq",
+              "keyValue": "={{ $('Normaliza').item.json.msg_chatid }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1136,
+        352
+      ],
+      "id": "25c41368-883d-4bd7-814f-d018fd2531bd",
+      "name": "Busca Lead",
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "nIROsFgVQJDj6So6",
+          "name": "Supabase Hermes Nexus"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "fb24cf9f-3bc2-4a97-be68-ee1e707cc70d",
+              "name": "lead_id",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        912,
+        544
+      ],
+      "id": "b981c5fe-2830-450f-bd9d-257a53ed0133",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "content": "### Trata Lead",
+        "height": 672,
+        "width": 752,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        592,
+        240
+      ],
+      "typeVersion": 1,
+      "id": "4b45bc14-6fce-4413-bd0f-6efeb31f057c",
+      "name": "Sticky Note1"
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Normaliza",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normaliza": {
+      "main": [
+        [
+          {
+            "node": "Busca Organizacao",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Busca Organizacao": {
+      "main": [
+        [
+          {
+            "node": "Msg não minha",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Msg não minha": {
+      "main": [
+        [
+          {
+            "node": "É Mensagem",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "É Mensagem": {
+      "main": [
+        [
+          {
+            "node": "Não é Grupo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Não é Grupo": {
+      "main": [
+        [
+          {
+            "node": "Busca Contato",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "É grupo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Busca Contato": {
+      "main": [
+        [
+          {
+            "node": "Busca URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Baixa Imagem Contato": {
+      "main": [
+        [
+          {
+            "node": "Upload Imagem Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Monta Path Storage": {
+      "main": [
+        [
+          {
+            "node": "Baixa Imagem Contato",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload Imagem Supabase": {
+      "main": [
+        [
+          {
+            "node": "Upsert Lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Busca URL": {
+      "main": [
+        [
+          {
+            "node": "Busca Chave",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Busca Chave": {
+      "main": [
+        [
+          {
+            "node": "Busca Lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Busca Lead": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Monta Path Storage",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {},
+  "versionId": "b87fcc21-41d2-4329-a249-165b28529014",
+  "activeVersionId": "b87fcc21-41d2-4329-a249-165b28529014",
+  "versionCounter": 27,
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2026-05-06T18:20:57.858Z",
+      "createdAt": "2026-05-06T18:20:57.858Z",
+      "role": "workflow:owner",
+      "workflowId": "AaFUKehBqa6Ins3A",
+      "projectId": "YigPAYsjJFUWZSIE",
+      "project": {
+        "updatedAt": "2026-04-30T14:12:08.367Z",
+        "createdAt": "2026-04-30T14:10:17.113Z",
+        "id": "YigPAYsjJFUWZSIE",
+        "name": "Hermes  Nexus <hermes@synapiens.com.br>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "creatorId": "068cb0bf-00d5-40b6-9668-5199f047d963"
+      }
+    }
+  ],
+  "tags": [],
+  "activeVersion": {
+    "updatedAt": "2026-05-06T19:33:17.953Z",
+    "createdAt": "2026-05-06T18:30:52.910Z",
+    "versionId": "b87fcc21-41d2-4329-a249-165b28529014",
+    "workflowId": "AaFUKehBqa6Ins3A",
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "hermes-nexus",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          -112,
+          736
+        ],
+        "id": "ec3ff104-8671-4cab-a83a-d28421464304",
+        "name": "Webhook",
+        "webhookId": "0d37d4e6-8a8d-420a-95b6-9ec97d462e7c"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "9f5229fa-aef3-498e-9d6a-e4a71d88d234",
+                "name": "tipo_evento",
+                "value": "={{ $('Webhook').item.json.body.EventType }}",
+                "type": "string"
+              },
+              {
+                "id": "76dd82ec-7156-46e1-ae18-12c9d1787fae",
+                "name": "chat_name",
+                "value": "={{ $('Webhook').item.json.body.chat.name }}",
+                "type": "string"
+              },
+              {
+                "id": "6b82bd22-1f0c-4a86-a7da-21404dbab34e",
+                "name": "chat_agente",
+                "value": "={{ $('Webhook').item.json.body.chat.owner }}",
+                "type": "string"
+              },
+              {
+                "id": "78848111-e81c-46de-9036-d371aa4a4b32",
+                "name": "chat_cliente",
+                "value": "={{ $('Webhook').item.json.body.chat.phone }}",
+                "type": "string"
+              },
+              {
+                "id": "767f0377-82c3-40f5-9590-64f0d92885bf",
+                "name": "chat_id",
+                "value": "={{ $('Webhook').item.json.body.chat.wa_chatid }}",
+                "type": "string"
+              },
+              {
+                "id": "2a413026-4b50-4f20-9351-3c52a06be173",
+                "name": "chat_lid",
+                "value": "={{ $('Webhook').item.json.body.chat.wa_chatlid }}",
+                "type": "string"
+              },
+              {
+                "id": "2c18d894-a4f5-4069-88a6-935342bd19d4",
+                "name": "chat_nome_contato",
+                "value": "={{ $('Webhook').item.json.body.chat.wa_contactName }}",
+                "type": "string"
+              },
+              {
+                "id": "2b8d9476-5560-4428-951e-39a841b00b6f",
+                "name": "chat_fast_id",
+                "value": "={{ $('Webhook').item.json.body.chat.wa_fastid }}",
+                "type": "string"
+              },
+              {
+                "id": "5192c764-52b7-498f-be52-20637148edf8",
+                "name": "chat_ultimo_lid_envio",
+                "value": "={{ $('Webhook').item.json.body.chat.wa_lastMessageSender }}",
+                "type": "string"
+              },
+              {
+                "id": "6028c0b6-efaf-4ebe-b401-e53406b13c7f",
+                "name": "chat_ultimo_tipo_msg",
+                "value": "={{ $('Webhook').item.json.body.chat.wa_lastMessageType }}",
+                "type": "string"
+              },
+              {
+                "id": "c7af63a1-6d52-4ad3-9366-2929be8a6226",
+                "name": "chat_timestamp_msg",
+                "value": "={{ $('Webhook').item.json.body.chat.wa_lastMsgTimestamp }}",
+                "type": "number"
+              },
+              {
+                "id": "918a9d5c-bdb8-4beb-b2ab-b09b3355352c",
+                "name": "msg_chatid",
+                "value": "={{ $('Webhook').item.json.body.message.chatid }}",
+                "type": "string"
+              },
+              {
+                "id": "4fe3052a-6ed7-4dd9-aa50-8d040e49e88a",
+                "name": "msg_chatlid",
+                "value": "={{ $('Webhook').item.json.body.message.chatlid }}",
+                "type": "string"
+              },
+              {
+                "id": "efae5ba3-46d4-4cf8-a9a3-7186d2fdb6d0",
+                "name": "msg_conteudo",
+                "value": "={{ $('Webhook').item.json.body.message.content }}",
+                "type": "string"
+              },
+              {
+                "id": "51fc4ceb-626a-4e53-86aa-cd7815547e6d",
+                "name": "msg_minha",
+                "value": "={{ $('Webhook').item.json.body.message.fromMe }}",
+                "type": "boolean"
+              },
+              {
+                "id": "2cf1d628-e1d2-4c9d-b79f-0465b5a124cc",
+                "name": "msg_cliente",
+                "value": "={{ $('Webhook').item.json.body.message.senderName }}",
+                "type": "string"
+              },
+              {
+                "id": "83a81328-6747-459b-b431-48d7ec1de2f5",
+                "name": "msg_so_origem",
+                "value": "={{ $('Webhook').item.json.body.message.source }}",
+                "type": "string"
+              },
+              {
+                "id": "c552efec-0a24-46ab-a2e6-19c1e11ff431",
+                "name": "msg_status",
+                "value": "={{ $('Webhook').item.json.body.message.status }}",
+                "type": "string"
+              },
+              {
+                "id": "3c6cec05-c563-4263-87c2-df8292e2153d",
+                "name": "msg_texto",
+                "value": "={{ $('Webhook').item.json.body.message.text }}",
+                "type": "string"
+              },
+              {
+                "id": "f866961c-d539-4c98-8b48-7c5914fe4e30",
+                "name": "msg_grupo",
+                "value": "={{ $('Webhook').item.json.body.chat.wa_isGroup }}",
+                "type": "boolean"
+              },
+              {
+                "id": "238928b8-8336-45f1-bc5a-c2962eb9f50c",
+                "name": "msg_bloquedo",
+                "value": "={{ $('Webhook').item.json.body.chat.wa_isBlocked }}",
+                "type": "boolean"
+              },
+              {
+                "id": "25b70c99-993b-48d1-b136-bff6f2be9026",
+                "name": "token",
+                "value": "40199d39-514e-4e22-a5d2-f4f0b14bb0ff",
+                "type": "string"
+              },
+              {
+                "id": "470101ad-62cc-4748-a025-c31d51890b1d",
+                "name": "supa_url",
+                "value": "",
+                "type": "string"
+              },
+              {
+                "id": "d9c66838-bb0f-400c-b2f3-c90943a5d4ee",
+                "name": "supa_token",
+                "value": "",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -96,
+          512
+        ],
+        "id": "7b372d58-f078-4d08-ba7d-3296387351b8",
+        "name": "Normaliza"
+      },
+      {
+        "parameters": {
+          "operation": "get",
+          "dataTableId": {
+            "__rl": true,
+            "value": "IufdvqLDIHqb6MWk",
+            "mode": "list",
+            "cachedResultName": "Relacao Org Agente",
+            "cachedResultUrl": "/projects/YigPAYsjJFUWZSIE/datatables/IufdvqLDIHqb6MWk"
+          },
+          "matchType": "allConditions",
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "agente_id",
+                "keyValue": "={{ $json.chat_agente }}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.dataTable",
+        "typeVersion": 1.1,
+        "position": [
+          -80,
+          304
+        ],
+        "id": "89171678-e9e7-49ec-abed-591f67c6ef8f",
+        "name": "Busca Organizacao"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "87cbc8d2-9190-4098-8faa-afe5a7225b71",
+                "leftValue": "={{ $json.msg_minha }}",
+                "rightValue": false,
+                "operator": {
+                  "type": "boolean",
+                  "operation": "false",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          128,
+          304
+        ],
+        "id": "9f329364-7d90-4be6-838f-22026edf9e37",
+        "name": "Msg não minha"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "8ec2327a-61d4-4b21-9996-f82b304076f0",
+                "leftValue": "={{ $('Normaliza').item.json.tipo_evento }}",
+                "rightValue": "messages",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          368,
+          288
+        ],
+        "id": "e3475f0e-aff6-4d73-b10b-7150f2a604bc",
+        "name": "É Mensagem"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "a0eabc0b-ae61-4c6e-bf58-8aa0f41eb5a3",
+                "leftValue": "={{ $('Normaliza').item.json.msg_grupo }}",
+                "rightValue": false,
+                "operator": {
+                  "type": "boolean",
+                  "operation": "false",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          128,
+          544
+        ],
+        "id": "9385ae57-e259-4650-a7b3-faf9dade754e",
+        "name": "Não é Grupo"
+      },
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.noOp",
+        "typeVersion": 1,
+        "position": [
+          128,
+          768
+        ],
+        "id": "3baee903-132b-4a30-a94c-6840a5fbecde",
+        "name": "É grupo"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://hermes-nexus.uazapi.com/chat/details",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Accept",
+                "value": "application/json"
+              },
+              {
+                "name": "token",
+                "value": "={{ $('Normaliza').item.json.token }}"
+              }
+            ]
+          },
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "number",
+                "value": "={{ $('Normaliza').item.json.chat_cliente }}"
+              },
+              {
+                "name": "preview",
+                "value": "false"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          704,
+          528
+        ],
+        "id": "439e0b8b-2ade-4350-9c22-741d6ced3252",
+        "name": "Busca Contato"
+      },
+      {
+        "parameters": {
+          "url": "={{ $('Busca Contato').item.json.image }}",
+          "options": {
+            "response": {
+              "response": {
+                "responseFormat": "file"
+              }
+            }
+          }
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          688,
+          768
+        ],
+        "id": "340162a2-4ff4-4ac2-80ce-baaf2ebe141d",
+        "name": "Baixa Imagem Contato"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "aa001001-0000-0000-0000-000000000001",
+                "name": "org_codigo",
+                "value": "={{ $('Busca Organizacao').item.json.organizacao_id }}",
+                "type": "string"
+              },
+              {
+                "id": "aa001002-0000-0000-0000-000000000002",
+                "name": "storage_filename",
+                "value": "={{ $('Normaliza').item.json.chat_cliente }}.jpg",
+                "type": "string"
+              },
+              {
+                "id": "aa001003-0000-0000-0000-000000000003",
+                "name": "storage_path",
+                "value": "={{ $('Busca Organizacao').item.json.organizacao_id + '/' + $('Normaliza').item.json.chat_cliente + '.jpg' }}",
+                "type": "string"
+              },
+              {
+                "id": "aa001004-0000-0000-0000-000000000004",
+                "name": "supabase_url",
+                "value": "={{ $('Busca URL').item.json.valor }}",
+                "type": "string"
+              },
+              {
+                "id": "aa001005-0000-0000-0000-000000000005",
+                "name": "supabase_service_key",
+                "value": "={{ $('Busca Chave').item.json.valor }}",
+                "type": "string"
+              },
+              {
+                "id": "aa001006-0000-0000-0000-000000000006",
+                "name": "imagem_url_publica",
+                "value": "={{ $('Busca URL').item.json.valor + '/storage/v1/object/public/lead/' + $('Busca Organizacao').item.json.organizacao_id + '/' + $('Normaliza').item.json.chat_cliente + '.jpg' }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1152,
+          544
+        ],
+        "id": "d49dcd54-7613-4eaf-b792-bce6b8469ed4",
+        "name": "Monta Path Storage"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "={{ $('Monta Path Storage').item.json.supabase_url + '/storage/v1/object/lead/' + $('Monta Path Storage').item.json.storage_path }}",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Authorization",
+                "value": "={{ 'Bearer ' + $('Monta Path Storage').item.json.supabase_service_key }}"
+              },
+              {
+                "name": "Content-Type",
+                "value": "image/jpeg"
+              },
+              {
+                "name": "x-upsert",
+                "value": "true"
+              }
+            ]
+          },
+          "sendBody": true,
+          "contentType": "binaryData",
+          "inputDataFieldName": "data",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          928,
+          768
+        ],
+        "id": "7d79eb51-a446-4b45-9673-3e1c6c66407f",
+        "name": "Upload Imagem Supabase"
+      },
+      {
+        "parameters": {
+          "content": "### Trata Mensagem\n",
+          "height": 448,
+          "width": 512,
+          "color": 3
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          64,
+          240
+        ],
+        "typeVersion": 1,
+        "id": "181fd580-9e06-434a-a157-e5a44c3111ba",
+        "name": "Sticky Note"
+      },
+      {
+        "parameters": {
+          "content": "### Imagem → Supabase Storage\n⚠️ Ajuste antes de usar:\n- supabase_url e supabase_service_key vêm do vault\n- on_conflict=contact: coluna unique da tabela lead\n- Se a PK for diferente, altere o parâmetro on_conflict na URL do Upsert Lead",
+          "height": 200,
+          "width": 580,
+          "color": 5
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          0,
+          0
+        ],
+        "typeVersion": 1,
+        "id": "e7aec61a-604c-4c7a-80c9-dfcda731c4f3",
+        "name": "Sticky Note Supabase"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "={{ $('Monta Path Storage').item.json.supabase_url }}/rest/v1/leads?on_conflict=id",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "apikey",
+                "value": "={{ $('Monta Path Storage').item.json.supabase_service_key }}"
+              },
+              {
+                "name": "Authorization",
+                "value": "={{ 'Bearer ' + $('Monta Path Storage').item.json.supabase_service_key }}"
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Prefer",
+                "value": "resolution=merge-duplicates,return=representation"
+              }
+            ]
+          },
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "organization_id",
+                "value": "={{ $('Busca Organizacao').item.json.organizacao_id }}"
+              },
+              {
+                "name": "name",
+                "value": "={{ $('Normaliza').item.json.chat_nome_contato || $('Normaliza').item.json.msg_cliente }}"
+              },
+              {
+                "name": "contact",
+                "value": "={{ $('Normaliza').item.json.chat_cliente }}"
+              },
+              {
+                "name": "wht_id",
+                "value": "={{ $('Normaliza').item.json.msg_chatid }}"
+              },
+              {
+                "name": "wht_lid",
+                "value": "={{ $('Normaliza').item.json.chat_lid }}"
+              },
+              {
+                "name": "wht_cnt_nome",
+                "value": "={{ $('Normaliza').item.json.msg_cliente }}"
+              },
+              {
+                "name": "avatar_url",
+                "value": "={{ $('Monta Path Storage').item.json.imagem_url_publica }}"
+              },
+              {
+                "name": "id",
+                "value": "={{ $('Busca Lead').item.json.id }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          1152,
+          768
+        ],
+        "id": "dd749a98-bad5-4f13-ace2-9aaff0332b12",
+        "name": "Upsert Lead"
+      },
+      {
+        "parameters": {
+          "operation": "get",
+          "dataTableId": {
+            "__rl": true,
+            "value": "d2NFNGIyvL1BjYsp",
+            "mode": "list",
+            "cachedResultName": "vault",
+            "cachedResultUrl": "/projects/YigPAYsjJFUWZSIE/datatables/d2NFNGIyvL1BjYsp"
+          },
+          "matchType": "allConditions",
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "projeto",
+                "keyValue": "n8n_hermes_nexus_lead"
+              },
+              {
+                "keyName": "item",
+                "keyValue": "SUPABASE_URL"
+              }
+            ]
+          },
+          "returnAll": true
+        },
+        "type": "n8n-nodes-base.dataTable",
+        "typeVersion": 1.1,
+        "position": [
+          704,
+          352
+        ],
+        "id": "4dc72e7d-06cf-4c62-a7ce-61f2be88174d",
+        "name": "Busca URL"
+      },
+      {
+        "parameters": {
+          "operation": "get",
+          "dataTableId": {
+            "__rl": true,
+            "value": "d2NFNGIyvL1BjYsp",
+            "mode": "list",
+            "cachedResultName": "vault",
+            "cachedResultUrl": "/projects/YigPAYsjJFUWZSIE/datatables/d2NFNGIyvL1BjYsp"
+          },
+          "matchType": "allConditions",
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "projeto",
+                "keyValue": "n8n_hermes_nexus_lead"
+              },
+              {
+                "keyName": "item",
+                "keyValue": "SUPABASE_KEY"
+              }
+            ]
+          },
+          "returnAll": true
+        },
+        "type": "n8n-nodes-base.dataTable",
+        "typeVersion": 1.1,
+        "position": [
+          928,
+          352
+        ],
+        "id": "2aa6dd22-ead8-45cb-a2ae-44c94aed9948",
+        "name": "Busca Chave"
+      },
+      {
+        "parameters": {
+          "operation": "getAll",
+          "tableId": "leads",
+          "returnAll": true,
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "wht_lid",
+                "condition": "eq",
+                "keyValue": "={{ $('Normaliza').item.json.msg_chatlid }}"
+              },
+              {
+                "keyName": "wht_id",
+                "condition": "eq",
+                "keyValue": "={{ $('Normaliza').item.json.msg_chatid }}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.supabase",
+        "typeVersion": 1,
+        "position": [
+          1136,
+          352
+        ],
+        "id": "25c41368-883d-4bd7-814f-d018fd2531bd",
+        "name": "Busca Lead",
+        "alwaysOutputData": true,
+        "credentials": {
+          "supabaseApi": {
+            "id": "nIROsFgVQJDj6So6",
+            "name": "Supabase Hermes Nexus"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "fb24cf9f-3bc2-4a97-be68-ee1e707cc70d",
+                "name": "lead_id",
+                "value": "={{ $json.id }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          912,
+          544
+        ],
+        "id": "b981c5fe-2830-450f-bd9d-257a53ed0133",
+        "name": "Edit Fields"
+      },
+      {
+        "parameters": {
+          "content": "### Trata Lead",
+          "height": 672,
+          "width": 752,
+          "color": 4
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          592,
+          240
+        ],
+        "typeVersion": 1,
+        "id": "4b45bc14-6fce-4413-bd0f-6efeb31f057c",
+        "name": "Sticky Note1"
+      }
+    ],
+    "connections": {
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "Normaliza",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Normaliza": {
+        "main": [
+          [
+            {
+              "node": "Busca Organizacao",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Busca Organizacao": {
+        "main": [
+          [
+            {
+              "node": "Msg não minha",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Msg não minha": {
+        "main": [
+          [
+            {
+              "node": "É Mensagem",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "É Mensagem": {
+        "main": [
+          [
+            {
+              "node": "Não é Grupo",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Não é Grupo": {
+        "main": [
+          [
+            {
+              "node": "Busca Contato",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "É grupo",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Busca Contato": {
+        "main": [
+          [
+            {
+              "node": "Busca URL",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Baixa Imagem Contato": {
+        "main": [
+          [
+            {
+              "node": "Upload Imagem Supabase",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Monta Path Storage": {
+        "main": [
+          [
+            {
+              "node": "Baixa Imagem Contato",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Upload Imagem Supabase": {
+        "main": [
+          [
+            {
+              "node": "Upsert Lead",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Busca URL": {
+        "main": [
+          [
+            {
+              "node": "Busca Chave",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Busca Chave": {
+        "main": [
+          [
+            {
+              "node": "Busca Lead",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Busca Lead": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields": {
+        "main": [
+          [
+            {
+              "node": "Monta Path Storage",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Hermes  Nexus",
+    "name": "Version b87fcc21",
+    "description": "",
+    "autosaved": true,
+    "workflowPublishHistory": [
+      {
+        "createdAt": "2026-05-06T19:33:17.946Z",
+        "id": 1,
+        "workflowId": "AaFUKehBqa6Ins3A",
+        "versionId": "b87fcc21-41d2-4329-a249-165b28529014",
+        "event": "activated",
+        "userId": "068cb0bf-00d5-40b6-9668-5199f047d963"
+      },
+      {
+        "createdAt": "2026-05-06T19:33:23.379Z",
+        "id": 2,
+        "workflowId": "AaFUKehBqa6Ins3A",
+        "versionId": "b87fcc21-41d2-4329-a249-165b28529014",
+        "event": "deactivated",
+        "userId": "068cb0bf-00d5-40b6-9668-5199f047d963"
+      },
+      {
+        "createdAt": "2026-05-06T19:33:23.409Z",
+        "id": 3,
+        "workflowId": "AaFUKehBqa6Ins3A",
+        "versionId": "b87fcc21-41d2-4329-a249-165b28529014",
+        "event": "activated",
+        "userId": "068cb0bf-00d5-40b6-9668-5199f047d963"
+      }
+    ]
+  }
+}
